@@ -1,36 +1,68 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class OnewayQueue {
-    private double _value;
-    private final static Queue<Double> _QUEUE = new LinkedList<>();
+    private static Node _front;
+    private static Node _rear;
+    private static int _size;
 
-    public static void fillQueue() {
-        _QUEUE.add(0.6);
-        _QUEUE.add(3.4);
-        _QUEUE.add(8.7);
-        _QUEUE.add(12.4);
-        _QUEUE.add(5.12);
+    private OnewayQueue() {
     }
 
-    public double getValue() {
-        return this._value;
-    }
+    public static void add(double value) {
+        Node newNode = new Node(value);
 
-    public String valueToString(double value) {
-        return Double.toString(value);
-    }
-
-    public static String showQueue() {
-        QueueIterator iterator = new QueueIterator(_QUEUE);
-        if (!iterator.hasNextValue()) {
-            return "Очередь пустая";
+        if (_rear == null) {
+            _front = _rear = newNode;
+        } else {
+            _rear.next = newNode;
+            _rear = newNode;
         }
-        StringBuilder sb = new StringBuilder();
-        while (iterator.hasNextValue()) {
-            double value = iterator.nextValue();
-            sb.append(value).append("\t");
-        }
-        return sb.toString();
+        _size++;
     }
+
+    public static double remove() {
+        if (_front == null) {
+            throw new IllegalStateException("Очередь пустая");
+        }
+
+        double value = _front.value;
+        _front = _front.next;
+
+        if (_front == null) {
+            _rear = null;
+        }
+
+        _size--;
+        return value;
+    }
+
+    public static void fill() {
+        add(0.6);
+        add(3.4);
+        add(8.7);
+        add(12.4);
+        add(5.12);
+    }
+
+    public static double peek() {
+        if (_front == null) {
+            throw new IllegalStateException("Очередь пустая");
+        }
+        return _front.value;
+    }
+
+    public static boolean isEmpty() {
+        return _front == null;
+    }
+
+    public static int size() {
+        return _size;
+    }
+
+//    public static String showQueue() {
+//        if (isEmpty()) {
+//            return "Очередь пустая";
+//        }
+//
+//        StringBuilder sb = new StringBuilder();
+//        QueueIterator iterator = new QueueIterator(_front);
+//    }
 }

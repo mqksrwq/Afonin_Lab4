@@ -2,13 +2,18 @@ import java.io.*;
 
 public abstract class ResultSaver {
     public static boolean saveToFile(String fileName) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
-            pw.println(OnewayQueue.showQueue());
-            pw.close();
+        try (FileOutputStream fos = new FileOutputStream(fileName)) {
+            PrintStream ps = new PrintStream(fos);
+            ps.println(OnewayQueue.showQueue());
+            ps.close();
             return true;
         } catch (IOException e) {
-            System.out.println("Ошибка при сохранении файла:" + e.getMessage());
-            return false;
+            throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isFileExist(String fileName) {
+        File f = new File(fileName);
+        return f.exists();
     }
 }

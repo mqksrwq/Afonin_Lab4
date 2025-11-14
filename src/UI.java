@@ -1,17 +1,33 @@
 import java.util.Scanner;
 
+/**
+ * Класс взаимодействия с пользователем
+ */
 public class UI {
+
+    /**
+     * Объект класса Scanner для считывания данных
+     */
     private final Scanner _SC;
 
+    /**
+     * Конструктор по умолчанию
+     */
     UI() {
         _SC = new Scanner(System.in);
     }
 
+    /**
+     * Метод для вывода информации о работе и бригаде
+     */
     private void displayInfo() {
         System.out.println("===== Лабораторная работа №4 =====");
         System.out.println("===== Бригада 9: Бояркин М., Мишин А.");
     }
 
+    /**
+     * Метод взамодействия с пользователем
+     */
     public void run() {
         displayInfo();
         menu();
@@ -48,6 +64,9 @@ public class UI {
         System.out.println("===== Завершение программы.... =====");
     }
 
+    /**
+     * Метод для вывода меню действий
+     */
     private void menu() {
         System.out.println("Выберите действие:");
         System.out.println("1. Добавить значение в очередь");
@@ -59,6 +78,9 @@ public class UI {
         System.out.print("\nВыбор пользователя: ");
     }
 
+    /**
+     * Метод для вывода информации о добавлении элемента
+     */
     private void addInterface() {
         System.out.print("Введите значение: ");
         String input = _SC.nextLine();
@@ -66,21 +88,33 @@ public class UI {
         System.out.println(message);
     }
 
+    /**
+     * Метод для вывода информации о заполнении по умолчанию
+     */
     private void fillInterface() {
         String message = OnewayQueue.fill();
         System.out.println(message);
     }
 
+    /**
+     * Метод для вывода очереди
+     */
     private void showInterface() {
         String message = OnewayQueue.showQueue();
         System.out.println(message);
     }
 
+    /**
+     * Метод для вывода информации о циклическом сдвиге
+     */
     private void shiftInterface() {
         String message = OnewayQueue.taskShift();
         System.out.println(message);
     }
 
+    /**
+     * Метод для вывода информации о сохранении в файл
+     */
     private void saveInterface() {
         System.out.print("Введите название файла: ");
         String fileName = _SC.nextLine();

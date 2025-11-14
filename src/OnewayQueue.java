@@ -1,10 +1,22 @@
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class OnewayQueue {
-    private double _value;
+/**
+ * Абстрактный класс односторонней очереди
+ */
+public abstract class OnewayQueue {
+
+    /**
+     * Односторонняя очередь
+     */
     public final static Queue<Double> _QUEUE = new ArrayDeque<>();
 
+    /**
+     * Статический метод добавления значения в очередь
+     *
+     * @param value - значение, которое нужно добавить в очередь
+     * @return сообщение о выполнении/ошибке добавления
+     */
     public static String add(double value) {
         try {
             _QUEUE.add(value);
@@ -14,6 +26,11 @@ public class OnewayQueue {
         }
     }
 
+    /**
+     * Статический метод заполнения очереди значениями по умолчанию
+     *
+     * @return сообщение о добавлении значений в очередь
+     */
     public static String fill() {
         add(1.0);
         add(2.0);
@@ -24,14 +41,20 @@ public class OnewayQueue {
         return "Значения по умолчанию успешно добавлены в очередь";
     }
 
-    public double getValue() {
-        return _value;
-    }
-
+    /**
+     * Статический метод для проверки на пустую очередь
+     *
+     * @return true/false, если очередь пустая/заполненная
+     */
     public static boolean isEmptyQueue() {
         return _QUEUE.isEmpty();
     }
 
+    /**
+     * Статический метод, возвращающий очередь в виде строки
+     *
+     * @return очередь в виде строки или сообщение об ошибке
+     */
     public static String showQueue() {
         QueueIterator iterator = new QueueIterator(_QUEUE);
         if (!iterator.hasNextValue()) {
@@ -49,6 +72,10 @@ public class OnewayQueue {
         return sb.toString();
     }
 
+    /**
+     * Статический метод для циклического сдвига элементов очереди
+     * Принцип работы: последний элемент становится первым
+     */
     public static void cycleShift() {
         if (!isEmptyQueue()) {
             Double firstElement = _QUEUE.poll();
@@ -56,6 +83,12 @@ public class OnewayQueue {
         }
     }
 
+    /**
+     * Статический метод, выполняющий циклические сдвиги до тех пор,
+     * пока максимальный элемент не будет первым в очереди
+     *
+     * @return сообщение об успешном выполнении/ошибке пустой очереди
+     */
     public static String taskShift() {
         if (isEmptyQueue()) {
             return "Очередь пустая!";

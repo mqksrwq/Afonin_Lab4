@@ -1,4 +1,6 @@
 import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Queue;
 
 /**
@@ -9,7 +11,7 @@ public abstract class OnewayQueue {
     /**
      * Односторонняя очередь
      */
-    public final static Queue<Double> _QUEUE = new ArrayDeque<>();
+    public final static Queue<DoubleValue> _QUEUE = new ArrayDeque<>();
 
     /**
      * Статический метод добавления значения в очередь
@@ -17,12 +19,12 @@ public abstract class OnewayQueue {
      * @param value - значение, которое нужно добавить в очередь
      * @return сообщение о выполнении/ошибке добавления
      */
-    public static String add(double value) {
+    public static String add(DoubleValue value) {
         try {
             _QUEUE.add(value);
             return "Значение успешно добавлено в очередь";
         } catch (NumberFormatException e) {
-            return "Значение не может быть пустым или строковым!";
+            return e.getMessage();
         }
     }
 
@@ -32,12 +34,11 @@ public abstract class OnewayQueue {
      * @return сообщение о добавлении значений в очередь
      */
     public static String fill() {
-        add(1.0);
-        add(2.0);
-        add(3.0);
-        add(4.0);
-        add(5.0);
-        add(6.0);
+        add(new DoubleValue(1.5));
+        add(new DoubleValue(12.5));
+        add(new DoubleValue(3.5));
+        add(new DoubleValue(2.5));
+        add(new DoubleValue(5.5));
         return "Значения по умолчанию успешно добавлены в очередь";
     }
 
@@ -57,6 +58,7 @@ public abstract class OnewayQueue {
      */
     public static String showQueue() {
         QueueIterator iterator = new QueueIterator(_QUEUE);
+
         if (!iterator.hasNextValue()) {
             return "Очередь пустая";
         }
@@ -64,8 +66,8 @@ public abstract class OnewayQueue {
         StringBuilder sb = new StringBuilder("Очередь: ");
 
         while (iterator.hasNextValue()) {
-            double value = iterator.nextValue();
-            sb.append(value);
+            DoubleValue value = iterator.nextValue();
+            sb.append(value.getValue());
             sb.append("    ");
         }
 
@@ -78,7 +80,7 @@ public abstract class OnewayQueue {
      */
     public static void cycleShift() {
         if (!isEmptyQueue()) {
-            Double firstElement = _QUEUE.poll();
+            DoubleValue firstElement = _QUEUE.poll();
             add(firstElement);
         }
     }
@@ -94,8 +96,8 @@ public abstract class OnewayQueue {
             return "Очередь пустая!";
         }
 
-        double maxValue = _QUEUE.stream().max(Double::compare).get();
-        while (_QUEUE.peek() != maxValue) {
+        double maxValue = _QUEUE.stream().map(DoubleValue::getValue).max(Double::compareTo).get();
+        while (_QUEUE.peek().getValue() != maxValue) {
             cycleShift();
         }
         return "Циклический сдвиг успешно завершен";

@@ -30,35 +30,34 @@ public class UI {
      */
     public void run() {
         displayInfo();
-        menu();
+        menuUI();
         String input = _SC.nextLine();
         while (!input.equals("6")) {
             try {
                 switch (input) {
                     case "1":
-                        addInterface();
+                        addUI();
                         break;
                     case "2":
-                        fillInterface();
+                        fillUI();
                         break;
                     case "3":
-                        showInterface();
+                        showUI();
                         break;
                     case "4":
-                        shiftInterface();
+                        shiftUI();
                         break;
                     case "5":
-                        saveInterface();
+                        saveUI();
                         break;
                     default:
                         System.out.println("Некорректный выбор!");
                 }
             } catch (Exception e) {
-
                 System.out.println(e.getMessage());
             }
             System.out.print("\n");
-            menu();
+            menuUI();
             input = _SC.nextLine();
         }
         System.out.println("===== Завершение программы.... =====");
@@ -67,7 +66,7 @@ public class UI {
     /**
      * Метод для вывода меню действий
      */
-    private void menu() {
+    private void menuUI() {
         System.out.println("Выберите действие:");
         System.out.println("1. Добавить значение в очередь");
         System.out.println("2. Заполнить очередь значениями по умолчанию");
@@ -81,25 +80,27 @@ public class UI {
     /**
      * Метод для вывода информации о добавлении элемента
      */
-    private void addInterface() {
+    private void addUI() {
         System.out.print("Введите значение: ");
         String input = _SC.nextLine();
-        String message = OnewayQueue.add(Double.parseDouble(input));
+        String message = OnewayQueue.add(DoubleValue.parseDoubleValue(input));
         System.out.println(message);
+        showUI();
     }
 
     /**
      * Метод для вывода информации о заполнении по умолчанию
      */
-    private void fillInterface() {
+    private void fillUI() {
         String message = OnewayQueue.fill();
         System.out.println(message);
+        showUI();
     }
 
     /**
      * Метод для вывода очереди
      */
-    private void showInterface() {
+    private void showUI() {
         String message = OnewayQueue.showQueue();
         System.out.println(message);
     }
@@ -107,15 +108,16 @@ public class UI {
     /**
      * Метод для вывода информации о циклическом сдвиге
      */
-    private void shiftInterface() {
+    private void shiftUI() {
         String message = OnewayQueue.taskShift();
         System.out.println(message);
+        showUI();
     }
 
     /**
      * Метод для вывода информации о сохранении в файл
      */
-    private void saveInterface() {
+    private void saveUI() {
         System.out.print("Введите название файла: ");
         String fileName = _SC.nextLine();
         boolean success = ResultSaver.isFileExist(fileName);

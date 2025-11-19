@@ -1,22 +1,23 @@
+import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
 
 /**
  * Класс итератора односторонней очереди
  */
-public class QueueIterator {
+public class QueueIterator extends ArrayDeque<DoubleValue> {
 
     /**
      * Статический объект интерфейса итератора
      */
-    private static Iterator<Double> _iterator;
+    private static Iterator<DoubleValue> _iterator;
 
     /**
      * Конструктор с параметром
      *
      * @param q - объект односторонней очереди
      */
-    QueueIterator(Queue<Double> q) {
+    QueueIterator(Queue<DoubleValue> q) {
         _iterator = q.iterator();
     }
 
@@ -25,7 +26,7 @@ public class QueueIterator {
      *
      * @return следующий элемент структуры
      */
-    public double nextValue() {
+    public DoubleValue nextValue() {
         return _iterator.next();
     }
 
